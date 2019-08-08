@@ -35,7 +35,7 @@ export const createComponent = type => ({
   props: {
     data: {
       type: Object,
-      requried: true
+      required: true
     },
     options: {
       type: Object
@@ -77,25 +77,26 @@ export const createComponent = type => ({
     this.chartInstance = this.creator(this.$refs.tuiChart, this.data, this.computedOptions);
     this.addEventListeners();
   },
-  destoryed() {
+  destroyed() {
     chartEvents.forEach(event => {
       this.chartInstance.off(event);
     });
   },
   methods: {
     registerMapToOptions() {
-      if (this.theme) {
-        TuiChart.registerTheme('chartTheme', this.theme);
-        this.computedOptions = Object.assign({}, this.computedOptions, {
-          theme: 'chartTheme'
-        });
-      }
-    },
-    registerThemeToOptions() {
       if (this.map) {
         TuiChart.registerMap(this.map.name, this.map.value);
         this.computedOptions = Object.assign({}, this.computedOptions, {
           map: this.map.name || this.map
+        });
+      }
+    },
+    registerThemeToOptions() {
+      if (this.theme) {
+        // TuiChart.registerTheme('chartTheme', this.theme);
+        TuiChart.registerTheme(this.theme.name, this.theme.data);
+        this.computedOptions = Object.assign({}, this.computedOptions, {
+          theme: this.theme.name || this.theme
         });
       }
     },

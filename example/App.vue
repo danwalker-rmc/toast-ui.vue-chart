@@ -16,6 +16,7 @@
     ref="tuiLineColumnChart"
     :data="lineColumnData"
     :options="lineColumnOptions"
+    :theme="coolTheme"
   ></tui-combo-chart>
   <tui-map-chart
     ref="tuiMapChart"
@@ -211,6 +212,19 @@ export default {
         },
         legend: {
           visible: false
+        }
+      },
+      coolTheme: {
+        name: 'coolTheme',
+        data: {
+          series: {
+            column: {
+              colors: ['red', '#42CDFF', '#44ff44', '#ff00ff']
+            },
+            line: {
+              colors: ['#ff0000']
+            }
+          }
         }
       },
       mapChartData: {
