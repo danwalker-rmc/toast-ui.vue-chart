@@ -133,7 +133,8 @@ export default {
         legend: {
           visible: true,
           align: 'top'
-        }
+        },
+        ref: 'Testy'
       },
       barChartData: {
         categories: ['O', 'A', 'B', 'AB'],
@@ -163,7 +164,8 @@ export default {
         },
         legend: {
           visible: false
-        }
+        },
+        ref: 'Tasty'
       },
       lineColumnData: {
         categories: ['Male', 'Female', 'All'],
@@ -212,7 +214,8 @@ export default {
         },
         legend: {
           visible: false
-        }
+        },
+        ref: 'Zesty'
       },
       coolTheme: {
         name: 'coolTheme',

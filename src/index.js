@@ -1,5 +1,9 @@
 import {createComponent} from './base';
 
+/* function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+} */
+
 export const {
   barChart,
   columnChart,
@@ -31,6 +35,7 @@ export const {
   'boxplot',
   'bullet'
 ].reduce((obj, chartName) => {
+  // obj[`${chartName}Chart`] = createComponent(chartName, getRandomInt(5000));
   obj[`${chartName}Chart`] = createComponent(chartName);
 
   return obj;

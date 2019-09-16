@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable prefer-template */
 import TuiChart from 'tui-chart';
 
 const creator = {
@@ -29,9 +31,10 @@ const chartEvents = [
   'changeCheckedLegends'
 ];
 
-export const createComponent = type => ({
+export const createComponent = (type, ref) => ({
   name: `${type}-chart`,
-  template: '<div ref="tuiChart"></div>',
+  // template: `<div ref="tuiChart_${ref}"></div>`,
+  template: `<div ref="tuiChart"></div>`,
   props: {
     data: {
       type: Object,
@@ -59,12 +62,15 @@ export const createComponent = type => ({
     return {
       creator: creator[type],
       chartInstance: null,
-      computedOptions: {}
+      computedOptions: {},
+      refNum: ref
     };
   },
   watch: {
     data: {
       handler(newVal) {
+        console.log('SETTING DATA FOR CHART');
+        console.log(newVal);
         this.chartInstance.setData(newVal);
       },
       deep: true
@@ -74,7 +80,9 @@ export const createComponent = type => ({
     this.computedOptions = Object.assign({}, this.options);
     this.registerMapToOptions();
     this.registerThemeToOptions();
-    this.chartInstance = this.creator(this.$refs.tuiChart, this.data, this.computedOptions);
+    // const r = 'tuiChart_' + ref;
+    const r = 'tuiChart';
+    this.chartInstance = this.creator(this.$refs[r], this.data, this.computedOptions);
     this.addEventListeners();
   },
   destroyed() {
@@ -93,12 +101,17 @@ export const createComponent = type => ({
     },
     registerThemeToOptions() {
       if (this.theme) {
-        // TuiChart.registerTheme('chartTheme', this.theme);
         TuiChart.registerTheme(this.theme.name, this.theme.data);
         this.computedOptions = Object.assign({}, this.computedOptions, {
           theme: this.theme.name || this.theme
         });
       }
+    },
+    applyTheme(theme) {
+      console.log('TRYING TO APPLY PASSED THEME');
+      const result = TuiChart.registerTheme(theme.name, theme.data);
+
+      return result;
     },
     addEventListeners() {
       chartEvents.forEach(event => {
